@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nawal Sultan | Full Stack Engineer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/devicon.min.css">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#0a0e1a;--bg2:#0f1629;--bg3:#141c35;--card:#111827;--teal:#00d4aa;--teal2:#00b894;--teal-glow:rgba(0,212,170,.12);--teal-dim:rgba(0,212,170,.25);--text:#e2e8f0;--text-muted:#8892a4;--text-dim:#556075;--border:#1e2d4a;--border2:#253352;--r:12px}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden}
+a:focus-visible,button:focus-visible{outline:2px solid var(--teal);outline-offset:3px}
+#canvas{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none;opacity:.4}
+::-webkit-scrollbar{width:5px}::-webkit-scrollbar-track{background:var(--bg)}::-webkit-scrollbar-thumb{background:var(--teal2);border-radius:3px}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 4rem;height:64px;background:rgba(10,14,26,.85);backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}
+.nav-logo{font-family:'Fira Code',monospace;font-size:18px;font-weight:500;color:var(--teal);letter-spacing:-.5px}
+.nav-logo span{color:var(--text-muted)}
+.nav-links{display:flex;gap:2rem;list-style:none}
+.nav-links a{font-size:13px;font-weight:500;color:var(--text-muted);text-decoration:none;font-family:'Fira Code',monospace;transition:color .2s;letter-spacing:.02em}
+.nav-links a:hover{color:var(--teal)}
+.menu-btn{display:none;background:none;border:1px solid var(--border2);color:var(--teal);border-radius:8px;width:40px;height:40px;font-size:20px;cursor:pointer}
+
+/* DOT NAV */
+.dot-nav{position:fixed;right:2rem;top:50%;transform:translateY(-50%);z-index:99;display:flex;flex-direction:column;gap:12px}
+.dot-nav a{display:block;width:8px;height:8px;border-radius:50%;background:var(--border2);transition:all .3s;position:relative}
+.dot-nav a.active,.dot-nav a:hover{background:var(--teal);box-shadow:0 0 8px var(--teal);transform:scale(1.3)}
+.dot-nav a::after{content:attr(data-label);position:absolute;right:18px;top:50%;transform:translateY(-50%);font-size:11px;font-family:'Fira Code',monospace;color:var(--teal);white-space:nowrap;opacity:0;transition:opacity .2s;pointer-events:none}
+.dot-nav a:hover::after{opacity:1}
+
+/* SECTIONS */
+section{position:relative;z-index:1;min-height:100vh;display:flex;align-items:center;padding:100px 0}
+.container{width:100%;max-width:1000px;margin:0 auto;padding:0 2rem}
+svg.i{width:18px;height:18px;fill:currentColor}
+svg.i.stroke{fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+
+/* HERO */
+.hero-pre{font-family:'Fira Code',monospace;font-size:15px;color:var(--teal);margin-bottom:1.25rem;opacity:0;animation:fadeUp .6s .3s forwards}
+.hero-name{font-size:clamp(44px,7vw,80px);font-weight:800;letter-spacing:-2.5px;line-height:1;color:#fff;margin-bottom:.6rem;opacity:0;animation:fadeUp .6s .5s forwards}
+.hero-name .accent{color:var(--teal)}
+.hero-role{font-size:clamp(18px,3vw,32px);font-weight:300;color:var(--text-muted);margin-bottom:2rem;min-height:1.4em;opacity:0;animation:fadeUp .6s .7s forwards;font-family:'Fira Code',monospace}
+.hero-role .typed{color:var(--teal);font-weight:500}
+.cursor-blink{display:inline-block;width:2px;height:1em;background:var(--teal);vertical-align:middle;margin-left:2px;animation:blink .9s step-end infinite}
+.hero-desc{font-size:17px;color:var(--text-muted);max-width:520px;line-height:1.8;margin-bottom:2.5rem;opacity:0;animation:fadeUp .6s .9s forwards}
+.hero-btns{display:flex;gap:1rem;flex-wrap:wrap;opacity:0;animation:fadeUp .6s 1.1s forwards}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:12px 28px;border-radius:8px;font-size:14px;font-weight:600;font-family:inherit;text-decoration:none;border:none;cursor:pointer;transition:all .2s;letter-spacing:.02em}
+.btn-teal{background:var(--teal);color:#0a0e1a}
+.btn-teal:hover{background:var(--teal2);transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,212,170,.3)}
+.btn-outline{background:transparent;color:var(--teal);border:1.5px solid var(--teal)}
+.btn-outline:hover{background:var(--teal-glow);transform:translateY(-2px)}
+.hero-socials{display:flex;gap:1.5rem;margin-top:2.5rem;opacity:0;animation:fadeUp .6s 1.3s forwards}
+.social-link{color:var(--text-dim);text-decoration:none;transition:color .2s;display:flex;align-items:center;gap:6px;font-size:13px;font-family:'Fira Code',monospace}
+.social-link:hover{color:var(--teal)}
+
+/* SECTION HEADER */
+.sec-header{margin-bottom:3rem}
+.sec-num{font-family:'Fira Code',monospace;font-size:13px;color:var(--teal);margin-bottom:6px;letter-spacing:.1em}
+.sec-title{font-size:clamp(26px,4vw,40px);font-weight:800;letter-spacing:-1px;color:#fff;line-height:1.1;display:flex;align-items:center;gap:1rem}
+.sec-title::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,var(--border2),transparent);max-width:300px}
+
+/* ABOUT */
+#about{background:var(--bg2)}
+.about-grid{display:grid;grid-template-columns:1fr 2fr;gap:4rem;align-items:center}
+.about-avatar{width:200px;height:200px;border-radius:16px;background:linear-gradient(135deg,var(--bg3),var(--card));border:2px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:64px;font-weight:800;color:var(--teal);font-family:'Fira Code',monospace;box-shadow:0 0 40px rgba(0,212,170,.08)}
+.about-text p{font-size:15px;line-height:1.85;color:var(--text-muted);margin-bottom:1rem}
+.about-text p strong{color:var(--teal);font-weight:600}
+.about-info{display:grid;grid-template-columns:1fr 1fr;gap:.75rem;margin-top:1.5rem}
+.info-item{display:flex;align-items:center;gap:8px;font-size:13px;font-family:'Fira Code',monospace;color:var(--text-muted);overflow-wrap:anywhere}
+.info-item .label{color:var(--teal)}
+
+/* SKILLS */
+.skills-wrapper{display:grid;grid-template-columns:1fr 1fr;gap:2rem}
+.skill-cat{background:var(--card);border:1px solid var(--border2);border-radius:var(--r);padding:1.5rem}
+.skill-cat-title{font-family:'Fira Code',monospace;font-size:12px;font-weight:500;color:var(--teal);letter-spacing:.12em;text-transform:uppercase;margin-bottom:1rem;display:flex;align-items:center;gap:8px}
+.skill-cat-title::before{content:'▹';font-size:10px}
+.skill-pills{display:flex;flex-wrap:wrap;gap:8px}
+.pill{display:inline-flex;align-items:center;gap:7px;font-family:'Fira Code',monospace;font-size:12px;color:var(--text-muted);background:var(--bg3);border:1px solid var(--border2);border-radius:6px;padding:5px 12px;transition:all .2s}
+.pill:hover{color:var(--teal);border-color:var(--teal);background:var(--teal-glow)}
+.pill i{font-size:16px;line-height:1}
+.pill .emoji{font-size:14px;line-height:1}
+
+/* EXPERIENCE */
+#experience{background:var(--bg2)}
+.timeline{position:relative;padding-left:2rem}
+.timeline::before{content:'';position:absolute;left:0;top:0;bottom:0;width:1px;background:linear-gradient(180deg,var(--teal),var(--border2),transparent)}
+.tl-item{position:relative;padding-bottom:3rem}
+.tl-dot{position:absolute;left:-2.45rem;top:4px;width:16px;height:16px;border-radius:50%;background:var(--bg);border:2px solid var(--teal);box-shadow:0 0 10px rgba(0,212,170,.4)}
+.tl-date{font-family:'Fira Code',monospace;font-size:12px;color:var(--teal);margin-bottom:6px;letter-spacing:.05em}
+.tl-role{font-size:19px;font-weight:700;color:#fff;margin-bottom:2px}
+.tl-org{font-size:14px;color:var(--teal);font-weight:500;margin-bottom:1rem}
+.tl-bullets{list-style:none;display:flex;flex-direction:column;gap:8px}
+.tl-bullets li{font-size:14px;color:var(--text-muted);line-height:1.7;display:flex;gap:10px}
+.tl-bullets li::before{content:'▹';color:var(--teal);flex-shrink:0;font-size:12px;margin-top:3px}
+
+/* PROJECTS */
+.projects-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));gap:1.25rem}
+.proj-card{background:var(--card);border:1px solid var(--border2);border-radius:var(--r);padding:1.5rem;display:flex;flex-direction:column;gap:1rem;transition:border-color .25s,transform .25s,box-shadow .25s;position:relative;overflow:hidden}
+.proj-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--teal),var(--teal2));transform:scaleX(0);transform-origin:left;transition:transform .35s ease}
+.proj-card:hover{border-color:rgba(0,212,170,.3);transform:translateY(-4px);box-shadow:0 16px 40px rgba(0,0,0,.4)}
+.proj-card:hover::before{transform:scaleX(1)}
+.proj-top{display:flex;align-items:flex-start;justify-content:space-between;gap:1rem}
+.proj-icon{font-size:24px;width:44px;height:44px;background:var(--teal-glow);border:1px solid var(--teal-dim);border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.proj-links-top{display:flex;gap:12px}
+.proj-links-top a{color:var(--text-dim);text-decoration:none;transition:color .2s}
+.proj-links-top a:hover{color:var(--teal)}
+.proj-badge{font-family:'Fira Code',monospace;font-size:10px;font-weight:500;color:var(--teal);background:var(--teal-glow);border:1px solid var(--teal-dim);border-radius:20px;padding:2px 10px;letter-spacing:.08em;text-transform:uppercase;width:fit-content}
+.proj-title{font-size:18px;font-weight:700;color:#fff;letter-spacing:-.3px;line-height:1.3}
+.proj-desc{font-size:13.5px;color:var(--text-muted);line-height:1.7;flex:1}
+.proj-points{list-style:none;display:flex;flex-direction:column;gap:8px;flex:1}
+.proj-points li{font-size:13.5px;color:var(--text-muted);line-height:1.7;display:flex;gap:10px}
+.proj-points li::before{content:'▹';color:var(--teal);flex-shrink:0;font-size:12px;margin-top:3px}
+.proj-stack{display:flex;flex-wrap:wrap;gap:6px;padding-top:.75rem;border-top:1px solid var(--border)}
+.stack-tag{font-family:'Fira Code',monospace;font-size:11px;color:var(--text-dim);padding:2px 8px}
+
+/* EDUCATION */
+#education{background:var(--bg2)}
+.edu-card{background:var(--card);border:1px solid var(--border2);border-radius:var(--r);padding:2rem;display:flex;gap:1.5rem;align-items:flex-start;transition:border-color .2s}
+.edu-card:hover{border-color:rgba(0,212,170,.3)}
+.edu-icon{width:52px;height:52px;border-radius:12px;background:var(--teal-glow);border:1px solid var(--teal-dim);display:flex;align-items:center;justify-content:center;font-size:26px;flex-shrink:0}
+.edu-degree{font-size:18px;font-weight:700;color:#fff;margin-bottom:4px}
+.edu-school{font-size:14px;color:var(--teal);font-weight:500;margin-bottom:8px}
+.edu-meta{font-size:13px;color:var(--text-muted);font-family:'Fira Code',monospace;display:flex;gap:1.5rem;flex-wrap:wrap}
+.cert-card{margin-top:1.5rem;background:var(--card);border:1px solid var(--border2);border-radius:var(--r);padding:1.25rem 1.5rem;display:flex;align-items:center;gap:1rem}
+.cert-icon{font-size:20px}
+.cert-text{font-size:14px;color:var(--text-muted)}
+.cert-text strong{color:var(--text);font-weight:600}
+
+/* CONTACT */
+#contact{min-height:auto;padding:120px 0}
+.contact-inner{text-align:center;max-width:600px;margin:0 auto}
+.contact-pre{font-family:'Fira Code',monospace;font-size:13px;color:var(--teal);margin-bottom:1rem;letter-spacing:.1em}
+.contact-title{font-size:clamp(32px,5vw,52px);font-weight:800;color:#fff;letter-spacing:-2px;line-height:1.1;margin-bottom:1.25rem}
+.contact-sub{font-size:16px;color:var(--text-muted);line-height:1.75;margin-bottom:2.5rem}
+.contact-btns{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;margin-bottom:3rem}
+.contact-socials{display:flex;gap:2rem;justify-content:center}
+.contact-socials a{color:var(--text-dim);text-decoration:none;font-family:'Fira Code',monospace;font-size:13px;display:flex;align-items:center;gap:6px;transition:color .2s}
+.contact-socials a:hover{color:var(--teal)}
+.contact-socials svg.i{width:16px;height:16px}
+
+footer{text-align:center;padding:2rem;font-family:'Fira Code',monospace;font-size:12px;color:var(--text-dim);border-top:1px solid var(--border);position:relative;z-index:1}
+footer span{color:var(--teal)}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+.reveal{opacity:0;transform:translateY(30px);transition:opacity .6s ease,transform .6s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+
+/* TABLET */
+@media(max-width:1024px){nav{padding:0 2rem}.dot-nav{right:1rem}.about-grid{gap:2.5rem}}
+
+/* MOBILE */
+@media(max-width:768px){
+  nav{padding:0 1.25rem}
+  .menu-btn{display:block}
+  .nav-links{display:none;position:absolute;top:64px;left:0;right:0;flex-direction:column;gap:0;background:rgba(10,14,26,.97);border-bottom:1px solid var(--border);padding:.5rem 1.25rem 1rem}
+  .nav-links.open{display:flex}
+  .nav-links a{display:block;padding:12px 0;font-size:14px}
+  .dot-nav{display:none}
+  section{padding:80px 0;min-height:auto}
+  #hero{min-height:100vh}
+  .container{padding:0 1.25rem}
+  .hero-name{letter-spacing:-1.5px}
+  .hero-desc{font-size:15px}
+  .about-grid{grid-template-columns:1fr}
+  .about-avatar{width:110px;height:110px;font-size:38px}
+  .about-info{grid-template-columns:1fr}
+  .skills-wrapper{grid-template-columns:1fr}
+  .edu-card{flex-direction:column;padding:1.5rem}
+  .cert-card{align-items:flex-start}
+  .contact-socials{flex-wrap:wrap;gap:1.25rem}
+  .sec-title::after{display:none}
+}
+
+/* SMALL PHONES */
+@media(max-width:480px){
+  .hero-btns,.contact-btns{flex-direction:column}
+  .btn{justify-content:center;width:100%}
+  .hero-socials{flex-wrap:wrap;gap:1rem}
+  .tl-bullets li{font-size:13.5px}
+}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.hero-pre,.hero-name,.hero-role,.hero-desc,.hero-btns,.hero-socials,.reveal{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+
+<!-- ICON SPRITE -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="gh" viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.166 6.839 9.489.5.092.682-.217.682-.483 0-.237-.009-.868-.013-1.703-2.782.605-3.369-1.34-3.369-1.34-.454-1.155-1.11-1.463-1.11-1.463-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.912.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0112 6.836c.85.004 1.705.115 2.504.337 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .268.18.58.688.482A10.001 10.001 0 0022 12c0-5.523-4.477-10-10-10z"/></symbol>
+  <symbol id="li" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></symbol>
+  <symbol id="mail" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,12 2,6"/></symbol>
+  <symbol id="srv" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="8" rx="2"/><rect x="2" y="13" width="20" height="8" rx="2"/><line x1="6" y1="7" x2="6.01" y2="7"/><line x1="6" y1="17" x2="6.01" y2="17"/></symbol>
+  <symbol id="ext" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></symbol>
+</svg>
+
+<canvas id="canvas"></canvas>
+
+<div class="dot-nav">
+  <a href="#hero" data-label="Home" class="active"></a>
+  <a href="#about" data-label="About"></a>
+  <a href="#skills" data-label="Skills"></a>
+  <a href="#experience" data-label="Experience"></a>
+  <a href="#projects" data-label="Projects"></a>
+  <a href="#education" data-label="Education"></a>
+  <a href="#contact" data-label="Contact"></a>
+</div>
+
+<nav>
+  <div class="nav-logo"><span>&lt;</span>NS <span>/&gt;</span></div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <button class="menu-btn" id="menuBtn" aria-label="Toggle menu">☰</button>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="container">
+    <div class="hero-pre">Hi, my name is</div>
+    <h1 class="hero-name">Nawal <span class="accent">Sultan.</span></h1>
+    <div class="hero-role"><span class="typed" id="typed"></span><span class="cursor-blink"></span></div>
+    <p class="hero-desc">Full Stack Engineer specializing in MERN stack — building real-time systems, AI-integrated platforms, and production-ready web applications from Lahore, Pakistan.</p>
+    <div class="hero-btns">
+      <a href="#projects" class="btn btn-teal">View My Work</a>
+      <a href="#contact" class="btn btn-outline">Get In Touch</a>
+    </div>
+    <div class="hero-socials">
+      <a href="https://github.com/Nawalsultan0" target="_blank" rel="noopener" class="social-link"><svg class="i"><use href="#gh"/></svg>GitHub</a>
+      <a href="https://www.linkedin.com/in/nawal-sultan-303a242b6" target="_blank" rel="noopener" class="social-link"><svg class="i"><use href="#li"/></svg>LinkedIn</a>
+      <a href="mailto:nawal03.sultan2004@gmail.com" class="social-link"><svg class="i stroke"><use href="#mail"/></svg>Email</a>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="container">
+    <div class="sec-header reveal">
+      <div class="sec-num">about me</div>
+      <h2 class="sec-title">Who I Am</h2>
+    </div>
+    <div class="about-grid reveal">
+      <div><div class="about-avatar">NS</div></div>
+      <div class="about-text">
+        <p>I'm a <strong>Full Stack Engineer</strong> and Computer Science graduate from the University of Education, Lahore. I build end-to-end web applications with a focus on clean architecture and real-world impact.</p>
+        <p>My final year project, <strong>Mentolytics</strong>, is an AI-powered student wellbeing platform that integrates Gemini AI for emotional pattern recognition, Socket.io for real-time mentor-student communication, and role-based dashboards — rated a top FYP in the department.</p>
+        <p>I'm passionate about writing code that actually ships, learning fast, and building things that matter.</p>
+        <div class="about-info">
+          <div class="info-item"><span class="label">location:</span> Lahore, Pakistan</div>
+          <div class="info-item"><span class="label">stack:</span> MERN</div>
+          <div class="info-item"><span class="label">degree:</span> BS Computer Science</div>
+          <div class="info-item"><span class="label">grad:</span> 2026</div>
+          <div class="info-item"><span class="label">email:</span> nawal03.sultan2004@gmail.com</div>
+          <div class="info-item"><span class="label">status:</span> <span style="color:var(--teal)">open to work ✓</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="container">
+    <div class="sec-header reveal">
+      <div class="sec-num">skills</div>
+      <h2 class="sec-title">Tech Stack</h2>
+    </div>
+    <div class="skills-wrapper reveal">
+      <div class="skill-cat">
+        <div class="skill-cat-title">Languages</div>
+        <div class="skill-pills">
+          <span class="pill"><i class="devicon-javascript-plain colored"></i>JavaScript</span>
+          <span class="pill"><i class="devicon-typescript-plain colored"></i>TypeScript</span>
+          <span class="pill"><i class="devicon-c-plain colored"></i>C</span>
+          <span class="pill"><i class="devicon-cplusplus-plain colored"></i>C++</span>
+          <span class="pill"><span class="emoji">🗄️</span>SQL</span>
+        </div>
+      </div>
+      <div class="skill-cat">
+        <div class="skill-cat-title">Frontend</div>
+        <div class="skill-pills">
+          <span class="pill"><i class="devicon-react-original colored"></i>React.js</span>
+          <span class="pill"><i class="devicon-react-original colored"></i>React Native</span>
+          <span class="pill"><i class="devicon-nextjs-original"></i>Next.js</span>
+          <span class="pill"><i class="devicon-tailwindcss-original colored"></i>Tailwind CSS</span>
+          <span class="pill"><i class="devicon-redux-original colored"></i>Redux</span>
+        </div>
+      </div>
+      <div class="skill-cat">
+        <div class="skill-cat-title">Backend</div>
+        <div class="skill-pills">
+          <span class="pill"><i class="devicon-nodejs-plain colored"></i>Node.js</span>
+          <span class="pill"><i class="devicon-express-original"></i>Express.js</span>
+          <span class="pill"><i class="devicon-socketio-original"></i>Socket.io</span>
+          <span class="pill"><span class="emoji">🔌</span>REST APIs</span>
+          <span class="pill"><span class="emoji">🔐</span>JWT</span>
+        </div>
+      </div>
+      <div class="skill-cat">
+        <div class="skill-cat-title">Databases</div>
+        <div class="skill-pills">
+          <span class="pill"><i class="devicon-mongodb-plain colored"></i>MongoDB</span>
+          <span class="pill"><i class="devicon-mysql-plain colored"></i>MySQL</span>
+          <span class="pill"><i class="devicon-redis-plain colored"></i>Redis</span>
+        </div>
+      </div>
+      <div class="skill-cat">
+        <div class="skill-cat-title">DevOps &amp; Tools</div>
+        <div class="skill-pills">
+          <span class="pill"><i class="devicon-git-plain colored"></i>Git</span>
+          <span class="pill"><i class="devicon-githubactions-plain colored"></i>GitHub Actions</span>
+          <span class="pill"><i class="devicon-docker-plain colored"></i>Docker</span>
+          <span class="pill"><span class="emoji">🔄</span>CI/CD</span>
+          <span class="pill"><i class="devicon-jenkins-plain colored"></i>Jenkins</span>
+          <span class="pill"><i class="devicon-postman-plain colored"></i>Postman</span>
+        </div>
+      </div>
+      <div class="skill-cat">
+        <div class="skill-cat-title">Integrations</div>
+        <div class="skill-pills">
+          <span class="pill"><span class="emoji">💳</span>Stripe</span>
+          <span class="pill"><span class="emoji">☁️</span>Cloudinary</span>
+          <span class="pill"><span class="emoji">✨</span>Gemini AI</span>
+          <span class="pill"><i class="devicon-firebase-plain colored"></i>Firebase</span>
+          <span class="pill"><span class="emoji">✉️</span>Nodemailer</span>
+          <span class="pill"><span class="emoji">🔑</span>Clerk</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="container">
+    <div class="sec-header reveal">
+      <div class="sec-num">experience</div>
+      <h2 class="sec-title">Where I've Worked</h2>
+    </div>
+    <div class="timeline reveal">
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-date">Jun 2025 – Sep 2025</div>
+        <div class="tl-role">Software Engineering Fellow</div>
+        <div class="tl-org">Dev Weekends · Lahore, Pakistan</div>
+        <ul class="tl-bullets">
+          <li>Built and deployed full-stack applications over 12 weeks using React.js, Node.js, Express.js, and Tailwind CSS with JWT authentication and cloud deployment via Vercel and Render.</li>
+          <li>Delivered projects including a Grocery Management System, MERN Authentication System, and CRUD applications with MongoDB, Socket.io, and real-time DOM updates.</li>
+          <li>Collaborated in cross-functional teams with agile workflows, weekly code reviews, and CI/CD pipelines via GitHub Actions.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="container">
+    <div class="sec-header reveal">
+      <div class="sec-num">projects</div>
+      <h2 class="sec-title">Things I've Built</h2>
+    </div>
+    <div class="projects-grid">
+
+      <div class="proj-card reveal">
+        <div class="proj-top">
+          <div class="proj-icon">🧠</div>
+          <div class="proj-links-top">
+            <a href="https://github.com/Nawalsultan0" target="_blank" rel="noopener" title="GitHub"><svg class="i"><use href="#gh"/></svg></a>
+            <a href="https://drive.google.com/file/d/1jVwj48jMQAWXzGkU5zR241xnayqdbHe4/view?usp=drive_link" target="_blank" rel="noopener" title="Live Demo"><svg class="i stroke"><use href="#ext"/></svg></a>
+          </div>
+        </div>
+        <div class="proj-badge">⭐ Featured · FYP</div>
+        <div class="proj-title">Mentolytics</div>
+        <p class="proj-desc">AI-powered student wellbeing platform with real-time mentor–mentee chat, Gemini AI mood trend analysis, and personalised recommendations. Role-based dashboards for students, mentors, and admins with institutional analytics.</p>
+        <div class="proj-stack">
+          <span class="stack-tag">React Native</span><span class="stack-tag">Node.js</span><span class="stack-tag">Socket.io</span><span class="stack-tag">Gemini AI</span><span class="stack-tag">JWT</span><span class="stack-tag">MongoDB</span><span class="stack-tag">Expo</span>
+        </div>
+      </div>
+
+      <div class="proj-card reveal">
+        <div class="proj-top">
+          <div class="proj-icon">🛒</div>
+          <div class="proj-links-top">
+            <a href="https://github.com/Nawalsultan0" target="_blank" rel="noopener" title="GitHub"><svg class="i"><use href="#gh"/></svg></a>
+            <a href="https://greencart-one-brown.vercel.app/" target="_blank" rel="noopener" title="Live Demo"><svg class="i stroke"><use href="#ext"/></svg></a>
+            <a href="https://grocery-bakend.vercel.app/" target="_blank" rel="noopener" title="Backend API"><svg class="i stroke"><use href="#srv"/></svg></a>
+          </div>
+        </div>
+        <div class="proj-badge">Full Stack · Live</div>
+        <div class="proj-title">Green Cart – Grocery Management System (Full Stack)</div>
+        <ul class="proj-points">
+          <li>Built a full-stack grocery shopping app with user login, product listing, and cart management (add, update, delete items), using Node.js/Express.js REST APIs and MongoDB.</li>
+          <li>Implemented the checkout flow with delivery location entry and a choice of online payment or cash on delivery.</li>
+          <li>Deployed on Vercel with a responsive UI across devices.</li>
+        </ul>
+        <div class="proj-stack">
+          <span class="stack-tag">MongoDB</span><span class="stack-tag">Express.js</span><span class="stack-tag">React</span><span class="stack-tag">Node.js</span><span class="stack-tag">JWT</span><span class="stack-tag">REST APIs</span>
+        </div>
+      </div>
+
+      <div class="proj-card reveal">
+        <div class="proj-top">
+          <div class="proj-icon">🔐</div>
+          <div class="proj-links-top">
+            <a href="https://github.com/Nawalsultan0" target="_blank" rel="noopener" title="GitHub"><svg class="i"><use href="#gh"/></svg></a>
+          </div>
+        </div>
+        <div class="proj-badge">Security</div>
+        <div class="proj-title">MERN Authentication System</div>
+        <p class="proj-desc">Secure auth system with email verification, password reset, and logout handling. JWT-based security with Axios for API communication, role-based access control, and toast notifications for clean UX.</p>
+        <div class="proj-stack">
+          <span class="stack-tag">MongoDB</span><span class="stack-tag">Express.js</span><span class="stack-tag">React</span><span class="stack-tag">Node.js</span><span class="stack-tag">JWT</span><span class="stack-tag">Nodemailer</span>
+        </div>
+      </div>
+
+      <div class="proj-card reveal">
+        <div class="proj-top">
+          <div class="proj-icon">⚡</div>
+          <div class="proj-links-top">
+            <a href="https://github.com/Nawalsultan0" target="_blank" rel="noopener" title="GitHub"><svg class="i"><use href="#gh"/></svg></a>
+          </div>
+        </div>
+        <div class="proj-badge">Demo</div>
+        <div class="proj-title">CRUD Operations Demo</div>
+        <p class="proj-desc">Full Create, Read, Update, Delete demonstration using the MERN stack and Bootstrap. Features dynamic DOM updates and a mock backend API, showcasing core data management patterns cleanly.</p>
+        <div class="proj-stack">
+          <span class="stack-tag">MongoDB</span><span class="stack-tag">Express.js</span><span class="stack-tag">Node.js</span><span class="stack-tag">Bootstrap</span><span class="stack-tag">JavaScript</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- EDUCATION -->
+<section id="education">
+  <div class="container">
+    <div class="sec-header reveal">
+      <div class="sec-num">education</div>
+      <h2 class="sec-title">Background</h2>
+    </div>
+    <div class="reveal">
+      <div class="edu-card">
+        <div class="edu-icon">🎓</div>
+        <div>
+          <div class="edu-degree">Bachelor of Computer Science</div>
+          <div class="edu-school">University of Education, Lahore</div>
+          <div class="edu-meta"><span>📅 Aug 2022 – May 2026</span><span>📍 Lahore, Pakistan</span></div>
+        </div>
+      </div>
+      <div class="cert-card">
+        <div class="cert-icon">📜</div>
+        <div class="cert-text"><strong>Certificate</strong> — Seminar on Recent Advances in Computer Science and Information Technology</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="container">
+    <div class="contact-inner reveal">
+      <div class="contact-pre">what's next?</div>
+      <h2 class="contact-title">Get In Touch.</h2>
+      <p class="contact-sub">I'm currently open to full-time roles, internships, and freelance opportunities. Whether you have a question or just want to say hi — my inbox is always open.</p>
+      <div class="contact-btns">
+        <a href="mailto:nawal03.sultan2004@gmail.com" class="btn btn-teal">Say Hello</a>
+        <a href="https://www.linkedin.com/in/nawal-sultan-303a242b6" target="_blank" rel="noopener" class="btn btn-outline">LinkedIn</a>
+      </div>
+      <div class="contact-socials">
+        <a href="https://github.com/Nawalsultan0" target="_blank" rel="noopener"><svg class="i"><use href="#gh"/></svg>GitHub</a>
+        <a href="https://www.linkedin.com/in/nawal-sultan-303a242b6" target="_blank" rel="noopener"><svg class="i"><use href="#li"/></svg>LinkedIn</a>
+        <a href="mailto:nawal03.sultan2004@gmail.com"><svg class="i stroke"><use href="#mail"/></svg>Email</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer><p>Designed &amp; Built by <span>Nawal Sultan</span> · 2026</p></footer>
+
+<script>
+// PARTICLES
+const canvas=document.getElementById('canvas'),ctx=canvas.getContext('2d');
+let particles=[];
+function resize(){canvas.width=innerWidth;canvas.height=innerHeight}
+resize();addEventListener('resize',resize);
+class Particle{
+  constructor(){this.reset()}
+  reset(){this.x=Math.random()*canvas.width;this.y=Math.random()*canvas.height;this.vx=(Math.random()-.5)*.3;this.vy=(Math.random()-.5)*.3;this.r=Math.random()*1.5+.3;this.alpha=Math.random()*.4+.1}
+  update(){this.x+=this.vx;this.y+=this.vy;if(this.x<0||this.x>canvas.width||this.y<0||this.y>canvas.height)this.reset()}
+  draw(){ctx.beginPath();ctx.arc(this.x,this.y,this.r,0,Math.PI*2);ctx.fillStyle=`rgba(0,212,170,${this.alpha})`;ctx.fill()}
+}
+const COUNT=innerWidth<768?40:80;
+for(let i=0;i<COUNT;i++)particles.push(new Particle());
+function connect(){
+  for(let i=0;i<particles.length;i++)for(let j=i+1;j<particles.length;j++){
+    const dx=particles[i].x-particles[j].x,dy=particles[i].y-particles[j].y,d=Math.sqrt(dx*dx+dy*dy);
+    if(d<120){ctx.beginPath();ctx.strokeStyle=`rgba(0,212,170,${.06*(1-d/120)})`;ctx.lineWidth=.5;ctx.moveTo(particles[i].x,particles[i].y);ctx.lineTo(particles[j].x,particles[j].y);ctx.stroke()}
+  }
+}
+(function animate(){ctx.clearRect(0,0,canvas.width,canvas.height);particles.forEach(p=>{p.update();p.draw()});connect();requestAnimationFrame(animate)})();
+
+// TYPEWRITER
+const roles=['Full Stack Engineer','MERN Developer','React Developer','Node.js Developer'];
+let ri=0,ci=0,deleting=false;
+const el=document.getElementById('typed');
+function typeWriter(){
+  const word=roles[ri];
+  if(!deleting){el.textContent=word.slice(0,++ci);if(ci===word.length){deleting=true;setTimeout(typeWriter,2000);return}}
+  else{el.textContent=word.slice(0,--ci);if(ci===0){deleting=false;ri=(ri+1)%roles.length}}
+  setTimeout(typeWriter,deleting?60:100);
+}
+setTimeout(typeWriter,1500);
+
+// SCROLL REVEAL
+const observer=new IntersectionObserver(entries=>{
+  entries.forEach((e,i)=>{if(e.isIntersecting){setTimeout(()=>e.target.classList.add('visible'),i*80);observer.unobserve(e.target)}});
+},{threshold:.1});
+document.querySelectorAll('.reveal').forEach(r=>observer.observe(r));
+
+// DOT NAV ACTIVE
+const dots=document.querySelectorAll('.dot-nav a');
+const sectionMap={hero:0,about:1,skills:2,experience:3,projects:4,education:5,contact:6};
+const scrollObs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting){const idx=sectionMap[e.target.id];dots.forEach(d=>d.classList.remove('active'));if(dots[idx])dots[idx].classList.add('active')}});
+},{threshold:.4});
+document.querySelectorAll('section').forEach(s=>scrollObs.observe(s));
+
+// MOBILE MENU
+const menuBtn=document.getElementById('menuBtn'),navLinks=document.querySelector('.nav-links');
+menuBtn.addEventListener('click',()=>{const open=navLinks.classList.toggle('open');menuBtn.textContent=open?'✕':'☰'});
+navLinks.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{navLinks.classList.remove('open');menuBtn.textContent='☰'}));
+</script>
+</body>
+</html>
